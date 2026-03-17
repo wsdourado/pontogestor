@@ -20,7 +20,7 @@ exports.handler = async (event) => {
 
   try {
     const decoded = verifyToken(event);
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL);
     const path = event.path || '';
 
     // ── AJUSTES ──

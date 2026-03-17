@@ -11,7 +11,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'GET') return { statusCode: 405, headers, body: JSON.stringify({ error: 'Método não permitido' }) };
 
   try {
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL);
     const tenants = await sql`
       SELECT id, nome, segmento FROM tenants WHERE ativo = true ORDER BY nome
     `;

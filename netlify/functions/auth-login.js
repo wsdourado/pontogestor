@@ -26,7 +26,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'E-mail e senha são obrigatórios' }) };
     }
 
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL);
 
     const users = await sql`
       SELECT u.*, t.nome as tenant_nome, t.cnpj as tenant_cnpj, t.segmento as tenant_segmento

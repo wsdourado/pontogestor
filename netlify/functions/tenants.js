@@ -21,7 +21,7 @@ exports.handler = async (event) => {
 
   try {
     const decoded = verifyToken(event);
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL);
 
     // GET — listar tenants (superadmin) ou retornar o próprio tenant
     if (event.httpMethod === 'GET') {
