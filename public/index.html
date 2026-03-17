@@ -434,8 +434,17 @@ function fillDemo(r){
   else{s.value='t1';e.value='carlos@confiance.com.br';p.value='123456';}
 }
 
-function populateTenants(){
+async function populateTenants(){
   const sel=document.getElementById('login-tenant');
+  try{
+    const res=await fetch(`${API}/tenants-public`);
+    if(res.ok){
+      const tenants=await res.json();
+      tenants.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.nome;sel.appendChild(o);});
+      return;
+    }
+  }catch(e){}
+  // fallback local
   DB_LOCAL.tenants.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.nome;sel.appendChild(o);});
 }
 
